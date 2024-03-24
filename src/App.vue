@@ -38,6 +38,7 @@
             :class="{ error: formErrors.role }"
             required
           >
+            <option :value="null" disabled class="sp">Должность</option>
             <option
               v-for="option in positions"
               :key="option.value"
@@ -59,10 +60,25 @@
             :class="{ error: formErrors.password }"
             required
           />
+          <span
+            class="password-toggle"
+            @click="togglePasswordVisibility('password')"
+          >
+            <img
+              :src="
+                passwordVisible
+                  ? require('@/assets/eye-close.svg')
+                  : require('@/assets/eye.svg')
+              "
+              alt="Показать пароль"
+            />
+          </span>
+
           <span v-if="formErrors.password" class="error-message"
             >Поле обязательно для заполнения</span
           >
         </div>
+
         <div class="input-container">
           <input
             placeholder="Повторите пароль"
@@ -72,6 +88,20 @@
             :class="{ error: formErrors.password_repeat }"
             required
           />
+          <span
+            class="password-toggle"
+            @click="togglePasswordVisibility('password_repeat')"
+          >
+            <img
+              :src="
+                passwordRepeatVisible
+                  ? require('@/assets/eye-close.svg')
+                  : require('@/assets/eye.svg')
+              "
+              alt="Показать пароль"
+            />
+          </span>
+
           <span v-if="formErrors.password_repeat" class="error-message"
             >Поле обязательно для заполнения</span
           >
@@ -120,9 +150,18 @@ export default {
       ],
       formErrors: {},
       registrationSuccess: false,
+      passwordVisible: false,
+      passwordRepeatVisible: false,
     };
   },
   methods: {
+    togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      if (input) {
+        this[inputId + "Visible"] = !this[inputId + "Visible"];
+        input.type = this[inputId + "Visible"] ? "text" : "password";
+      }
+    },
     submitForm() {
       this.validateForm();
       if (
@@ -154,6 +193,8 @@ export default {
   min-height: 100vh;
 }
 form {
+  background-color: white;
+
   padding: 30px;
   border: 1px solid rgba(230, 230, 235, 1);
   border-radius: 10px;
@@ -195,10 +236,18 @@ form {
 input,
 select {
   width: 450px;
-  padding: 10px;
   border: 1px solid rgba(230, 230, 235, 1);
   border-radius: 11px;
-  color: rgba(217, 217, 217, 1);
+}
+select {
+  width: 472px;
+  padding: 10px 0 10px 10px;
+}
+option,
+input,
+input::placeholder {
+  padding: 10px;
+  color: rgb(0, 0, 0);
 }
 
 hr {

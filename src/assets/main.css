@@ -4,6 +4,9 @@
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
 }
+body {
+  background-color: #f7f7f7;
+}
 
 .switch {
   position: relative;
@@ -157,4 +160,15 @@
   box-shadow: none;
   transition: none;
   opacity: 1;
+}
+
+.input-container {
+  position: relative;
+}
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
